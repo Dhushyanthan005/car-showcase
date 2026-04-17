@@ -1,16 +1,125 @@
-# React + Vite
+# Car Showcase - Full Stack Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a full-stack web application for showcasing and managing cars. The project is organized into frontend and backend directories.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+car-showcase/
+├── frontend/          # React + Vite frontend application
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+├── backend/           # Node.js + Express backend API
+│   ├── index.js
+│   ├── package.json
+│   └── .env.example
+├── .gitignore
+└── README.md
+```
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-## Expanding the ESLint configuration
+### Frontend Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The frontend will run on `http://localhost:5173`
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env` file from `.env.example`:
+```bash
+cp .env.example .env
+```
+
+4. Start the development server:
+```bash
+npm run dev
+```
+
+The backend will run on `http://localhost:5000`
+
+## Available Scripts
+
+### Frontend
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+
+### Backend
+- `npm run dev` - Start with hot reload (uses nodemon)
+- `npm start` - Start production server
+
+## Technologies Used
+
+### Frontend
+- React
+- Vite
+- Tailwind CSS
+- JavaScript (JSX)
+
+### Backend
+- Node.js
+- Express
+- CORS
+
+## Git Workflow
+
+1. Create a feature branch:
+```bash
+git checkout -b feature/your-feature-name
+```
+
+2. Make changes and commit:
+```bash
+git add .
+git commit -m "Your commit message"
+```
+
+3. Push to remote:
+```bash
+git push origin feature/your-feature-name
+```
+
+4. Create a pull request on GitHub
+
+## Contributing
+
+When working on this project:
+1. Always create a feature branch
+2. Make sure both frontend and backend are functioning
+3. Test your changes before committing
+4. Keep commits descriptive and focused
+
+## License
+
+ISC
