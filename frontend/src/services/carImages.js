@@ -1,5 +1,8 @@
-// Reliable car brand image map using direct Wikimedia Commons thumbnail URLs
-// Format: https://commons.wikimedia.org/wiki/Special:FilePath/<filename>?width=400
+// Centralized car image helpers.
+// Place local images in `public/car-images/` and reference them by filename
+// via the `image` property on a car object (preferred) or by adding entries
+// to the `LOCAL_IMG` mapping below. When no local image exists, the code
+// falls back to Wikimedia thumbnails defined in `BRAND_IMG`.
 const BRAND_IMG = {
   "Acura":         "acura.jpg",
   "Alfa Romeo":    "Alfa_Romeo_Giulia_2016.jpg",
@@ -65,4 +68,82 @@ export const getCarImageUrl = (brand = "", width = 400) => {
   const file = BRAND_IMG[brand];
   if (!file) return null;
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`;
+};
+
+// Optional local mapping: map brand or "Brand Model" to a local filename
+// Example: { "Toyota": "toyota-camry.jpg", "Tesla Model 3": "tesla-model3.jpg" }
+export const LOCAL_IMG = {
+  // Files found in `public/` - map Brand or "Brand Model" to the local path
+  "Toyota Camry": "/Toyota Camry.jpn.webp",
+  "Toyota Corolla": "/Toyota Corolla.jpg",
+  Toyota: "/Toyota Camry.jpn.webp",
+
+  "Honda Civic": "/Honda Civic.jpn.webp",
+  "Honda Accord": "/Honda Accord.jpg",
+  Honda: "/Honda Civic.jpn.webp",
+
+  "Ford Mustang": "/Ford Mustang.jpn.webp",
+  Ford: "/Ford Mustang.jpn.webp",
+
+  "BMW 3 Series": "/BMW 3 Series.webp",
+  BMW: "/BMW 3 Series.webp",
+
+  "Mercedes-Benz C-Class": "/Mercedes-Benz C-Class.webp",
+  "Mercedes-Benz": "/Mercedes-Benz C-Class.webp",
+
+  "Audi A4": "/Audi A4.webp",
+  Audi: "/Audi A4.webp",
+
+  "Tesla Model 3": "/Tesla Model 3.jpg",
+  Tesla: "/Tesla Model 3.jpg",
+
+  "Chevrolet Camaro": "/Chevrolet Camaro.jpg",
+  Chevrolet: "/Chevrolet Camaro.jpg",
+
+  "Alfa Romeo Giulia": "/Alfa Romeo Giulia.jpg",
+  "Cadillac CT5": "/Cadillac CT5.jpg",
+  "Dodge Challenger": "/Dodge Challenger.jpg",
+  "Honda Civic": "/Honda Civic.jpn.webp",
+  "Hyundai Sonata": "/Hyundai Sonata.jpg",
+  "Infiniti Q50": "/Infiniti Q50.jpg",
+  "Jaguar F-Type": "/Jaguar F-Type.jpg",
+  "Jeep Wrangler": "/Jeep Wrangler.jpg",
+  "Kia Stinger": "/Kia Stinger.jpg",
+  "Land Rover Defender": "/Land Rover Defender.jpg",
+  "Lexus ES 350": "/Lexus ES 350.jpg",
+  "Lincoln Aviator": "/Lincoln Aviator.jpg",
+  "Mazda CX-5": "/Mazda CX-5.jpg",
+  "Mitsubishi Outlander": "/Mitsubishi Outlander.jpg",
+  "Peugeot 308": "/Peugeot 308.jpg",
+  "Subaru Outback": "/Subaru Outback.jpg",
+  "Suzuki Swift": "/Suzuki Swift.jpg",
+  "Volkswagen Golf GTI": "/Volkswagen Golf GTI.jpg",
+  "Volvo XC90": "/Volvo XC90.jpg",
+  "Cadillac": "/Cadillac CT5.jpg",
+  "Porsche": "/Porsche_911_992.jpg",
+  "Lamborghini": "/Lamborghini_Urus_2018.jpg",
+  "Audi": "/Audi A4.webp",
+  "BMW": "/BMW 3 Series.webp",
+  "Mercedes": "/Mercedes-Benz C-Class.webp",
+  // Add more mappings if you add more files to public/
+};
+
+export const getLocalCarImageUrl = (car) => {
+  if (!car) return null;
+  // If `image` provided on the car record, use it directly.
+  if (car.image) {
+    // If it's an absolute URL, return as-is. Otherwise treat as a filename
+    // placed in `public/` (root) or a subfolder path. Normalize to start with '/'.
+    if (/^https?:\/\//.test(car.image)) return car.image;
+    return car.image.startsWith("/") ? car.image : `/${car.image}`;
+  }
+
+  const brandKey = car.car || car.brand || "";
+  const modelKey = car.car_model ? `${brandKey} ${car.car_model}` : brandKey;
+
+  // Try exact brand+model mapping, then brand only
+  if (LOCAL_IMG[modelKey]) return LOCAL_IMG[modelKey].startsWith("/") ? LOCAL_IMG[modelKey] : `/${LOCAL_IMG[modelKey]}`;
+  if (LOCAL_IMG[brandKey]) return LOCAL_IMG[brandKey].startsWith("/") ? LOCAL_IMG[brandKey] : `/${LOCAL_IMG[brandKey]}`;
+
+  return null;
 };

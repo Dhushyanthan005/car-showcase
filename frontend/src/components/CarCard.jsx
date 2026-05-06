@@ -10,7 +10,7 @@ const FUEL_COLORS = {
 
 export default function CarCard({ car }) {
   const navigate = useNavigate();
-  const imgSrc = useCarImage(car.car, car.car_model);
+  const imgSrc = useCarImage(car);
   const fuel = car.car_color || "Gasoline";
   const fuelClass = FUEL_COLORS[fuel] || "bg-gray-500/20 text-gray-400";
 

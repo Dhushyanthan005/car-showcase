@@ -1,21 +1,46 @@
 import { useState, useEffect } from "react";
+import { getCarImageUrl, getLocalCarImageUrl } from "../services/carImages";
 
 const cache = {};
 
-export const useCarImage = (brand = "", model = "") => {
-  const key = `${brand} ${model}`;
+// useCarImage accepts either (brand, model) or a full car object.
+export const useCarImage = (brandOrCar = "", model = "") => {
+  const isObj = typeof brandOrCar === "object" && brandOrCar !== null;
+  const car = isObj ? brandOrCar : null;
+  const brand = isObj ? (car.car || car.brand || "") : brandOrCar;
+  const carModel = isObj ? (car.car_model || "") : model;
+
+  const key = isObj ? `car:${car.id || `${brand} ${carModel}`}` : `${brand} ${carModel}`;
   const [src, setSrc] = useState(cache[key] || null);
 
   useEffect(() => {
     if (cache[key]) { setSrc(cache[key]); return; }
 
+    // Check local image overrides first
+    if (car) {
+      const local = getLocalCarImageUrl(car);
+      if (local) {
+        cache[key] = local;
+        setSrc(local);
+        return;
+      }
+    }
+
     const queries = [
-      `${brand} ${model} automobile`,
+      `${brand} ${carModel} automobile`,
       `${brand} automobile`,
     ];
 
     const tryNext = async (index) => {
       if (index >= queries.length) {
+        // Try brand-based Wikimedia image as a last fetch attempt
+        const wiki = getCarImageUrl(brand, 800);
+        if (wiki) {
+          cache[key] = wiki;
+          setSrc(wiki);
+          return;
+        }
+
         const fallback = `https://picsum.photos/seed/${encodeURIComponent(key)}/800/500`;
         cache[key] = fallback;
         setSrc(fallback);
@@ -41,7 +66,7 @@ export const useCarImage = (brand = "", model = "") => {
     };
 
     tryNext(0);
-  }, [brand, model, key]);
+  }, [brand, carModel, key]);
 
   return src;
 };

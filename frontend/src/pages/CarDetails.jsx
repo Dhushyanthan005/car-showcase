@@ -15,7 +15,7 @@ export default function CarDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const imgSrc = useCarImage(car?.car, car?.car_model);
+  const imgSrc = useCarImage(car);
 
   useEffect(() => {
     const fetchCar = async () => {

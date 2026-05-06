@@ -7,9 +7,68 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Dependencies
-node_modules
-*/node_modules
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+*/node_modules/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+.env.local
+.env.*.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# serverless directories
+.serverless/
 
 # Build outputs
 dist
@@ -17,11 +76,10 @@ dist-ssr
 build
 */dist
 */dist-ssr
+*/build
 
-# Environment variables
-.env
-.env.local
-.env.*.local
+# Vite cache
+.vite
 
 # Local files
 *.local
@@ -29,6 +87,7 @@ build
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/launch.json
 .idea
 .DS_Store
 *.suo
@@ -36,3 +95,15 @@ build
 *.njsproj
 *.sln
 *.sw?
+
+# OS Files
+Thumbs.db
+desktop.ini
+
+# Python / General
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
